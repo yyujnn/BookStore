@@ -14,7 +14,7 @@ class TabBarViewController: UITabBarController {
         
         configureUI()
         configureTabItem()
-       
+    
     }
     
     func configureUI() {
@@ -24,16 +24,17 @@ class TabBarViewController: UITabBarController {
     
     func configureTabItem() {
 
-        let bookSearchVC = BookSearchViewController()
+        let searchVC = SearchTabViewController()
         let savedBooksVC = SavedBooksViewController()
+        let searchNav = UINavigationController(rootViewController: searchVC)
         
-        bookSearchVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
+        searchVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
         savedBooksVC.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
         
         // 아이템 이미지 추가
         //secondVC.tabBarItem = UITabBarItem(title: "Second", image: UIImage(systemName: "2.circle"), selectedImage: UIImage(systemName: "2.circle.fill"))
 
-        self.viewControllers = [bookSearchVC, savedBooksVC]
+        self.viewControllers = [searchNav, savedBooksVC]
         self.selectedIndex = 0
     }
 

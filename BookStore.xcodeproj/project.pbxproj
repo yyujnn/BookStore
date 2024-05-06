@@ -12,10 +12,11 @@
 		F3AB4F112BE4EE0100241516 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F3AB4F102BE4EE0100241516 /* Assets.xcassets */; };
 		F3AB4F142BE4EE0100241516 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F3AB4F122BE4EE0100241516 /* LaunchScreen.storyboard */; };
 		F3CD79212BE4EFD40041CF88 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CD79202BE4EFD40041CF88 /* TabBarViewController.swift */; };
-		F3CD79232BE4F0960041CF88 /* BookSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CD79222BE4F0960041CF88 /* BookSearchViewController.swift */; };
+		F3CD79232BE4F0960041CF88 /* SearchTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CD79222BE4F0960041CF88 /* SearchTabViewController.swift */; };
 		F3CD79252BE4F4B60041CF88 /* SavedBooksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CD79242BE4F4B60041CF88 /* SavedBooksViewController.swift */; };
 		F3CD79272BE4F4CD0041CF88 /* BookDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CD79262BE4F4CD0041CF88 /* BookDetailViewController.swift */; };
 		F3CD792A2BE6A6FC0041CF88 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = F3CD79292BE6A6FC0041CF88 /* SnapKit */; };
+		F3CD792C2BE8D0BD0041CF88 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CD792B2BE8D0BD0041CF88 /* SearchResultViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,9 +27,10 @@
 		F3AB4F132BE4EE0100241516 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F3AB4F152BE4EE0100241516 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F3CD79202BE4EFD40041CF88 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
-		F3CD79222BE4F0960041CF88 /* BookSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSearchViewController.swift; sourceTree = "<group>"; };
+		F3CD79222BE4F0960041CF88 /* SearchTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTabViewController.swift; sourceTree = "<group>"; };
 		F3CD79242BE4F4B60041CF88 /* SavedBooksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedBooksViewController.swift; sourceTree = "<group>"; };
 		F3CD79262BE4F4CD0041CF88 /* BookDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailViewController.swift; sourceTree = "<group>"; };
+		F3CD792B2BE8D0BD0041CF88 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,7 +67,8 @@
 				F3AB4F072BE4EE0000241516 /* AppDelegate.swift */,
 				F3AB4F092BE4EE0000241516 /* SceneDelegate.swift */,
 				F3CD79202BE4EFD40041CF88 /* TabBarViewController.swift */,
-				F3CD79222BE4F0960041CF88 /* BookSearchViewController.swift */,
+				F3CD79222BE4F0960041CF88 /* SearchTabViewController.swift */,
+				F3CD792B2BE8D0BD0041CF88 /* SearchResultViewController.swift */,
 				F3CD79262BE4F4CD0041CF88 /* BookDetailViewController.swift */,
 				F3CD79242BE4F4B60041CF88 /* SavedBooksViewController.swift */,
 				F3AB4F102BE4EE0100241516 /* Assets.xcassets */,
@@ -151,7 +154,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F3CD79232BE4F0960041CF88 /* BookSearchViewController.swift in Sources */,
+				F3CD79232BE4F0960041CF88 /* SearchTabViewController.swift in Sources */,
+				F3CD792C2BE8D0BD0041CF88 /* SearchResultViewController.swift in Sources */,
 				F3CD79212BE4EFD40041CF88 /* TabBarViewController.swift in Sources */,
 				F3CD79252BE4F4B60041CF88 /* SavedBooksViewController.swift in Sources */,
 				F3AB4F082BE4EE0000241516 /* AppDelegate.swift in Sources */,
