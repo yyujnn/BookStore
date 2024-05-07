@@ -24,27 +24,7 @@ class SearchTabViewController: UIViewController {
         setupConstraints()
         setupSearchBar()
         configureNavigationBar()
-        network()
-    }
-    
-    func network() {
-        NetworkingManager.shared.searchBooks(query: "Swift Programming") { result in
-            switch result {
-            case .success(let data):
-                // 성공적으로 데이터를 받아왔을 때 처리
-                print("Received data: \(data)")
-                // 데이터 정보 확인
-                if let jsonString = String(data: data, encoding: .utf8) {
-                    print("Received data: \(jsonString)")
-                } else {
-                    print("Failed to convert data to string.")
-                }
-            case .failure(let error):
-                // 에러 발생 시 처리
-                print("Error: \(error.localizedDescription)")
-            }
-        }
-
+        
     }
     
     func setupSearchBar() {
@@ -85,9 +65,4 @@ extension SearchTabViewController: UISearchBarDelegate {
         searchResultVC.searchKeyword = searchText
         navigationController?.pushViewController(searchResultVC, animated: true)
     }
-}
-
-#Preview {
-    SearchTabViewController()
-    // 화면 업데이트: command+option+p
 }

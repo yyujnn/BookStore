@@ -15,6 +15,8 @@ class SearchResultViewController: UIViewController {
         }
     }
     
+    var books: [Document] = []
+    
     let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.searchBarStyle = .minimal
@@ -37,6 +39,7 @@ class SearchResultViewController: UIViewController {
         configureUI()
         configureNavigationBar()
         setupSearchBar()
+        fetchBookData()
     }
     
     private func setupConstraints() {
@@ -71,6 +74,27 @@ class SearchResultViewController: UIViewController {
             searchBar.text = searchKeyword
         }
     }
+    
+    func fetchBookData() {
+        NetworkingManager.shared.searchBooks(query: "미움받을 용기") { result in
+            switch result {
+            case .success(let data):
+                do {
+                    let decodedData = try JSONDecoder().decode(BookData.self, from: data)
+                    print("Decoded data: \(decodedData)")
+                    self.books = decodedData.documents
+                    DispatchQueue.main.async {
+                        self.collectionView.reloadData()
+                    }
+                } catch {
+                    print("Failed to parse data: \(error.localizedDescription)")
+                }
+                
+            case .failure(let error):
+                print("Failed to fetch book data: \(error.localizedDescription)")
+            }
+        }
+    }
 }
 
 extension SearchResultViewController: UISearchBarDelegate {
@@ -79,11 +103,14 @@ extension SearchResultViewController: UISearchBarDelegate {
 
 extension SearchResultViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return books.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookCollectionViewCell.identifier, for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookCollectionViewCell.identifier, for: indexPath) as? BookCollectionViewCell else { return UICollectionViewCell() }
+        
+        let book = books[indexPath.item]
+        cell.setData(with: book)
         return cell
     }
 }
@@ -96,7 +123,7 @@ extension SearchResultViewController: UICollectionViewDelegateFlowLayout {
            return CGSize(width: widthPerItem, height: 180)
        }
 }
-#Preview {
-    SearchResultViewController()
-    // 화면 업데이트: command+option+p
-}
+//#Preview {
+//    SearchResultViewController()
+//    // 화면 업데이트: command+option+p
+//}
