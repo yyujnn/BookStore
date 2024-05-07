@@ -11,11 +11,16 @@
 		F3AB4F0A2BE4EE0000241516 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AB4F092BE4EE0000241516 /* SceneDelegate.swift */; };
 		F3AB4F112BE4EE0100241516 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F3AB4F102BE4EE0100241516 /* Assets.xcassets */; };
 		F3AB4F142BE4EE0100241516 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F3AB4F122BE4EE0100241516 /* LaunchScreen.storyboard */; };
+		F3C3D9F12BE9E7D5002BC8FA /* BookCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C3D9F02BE9E7D5002BC8FA /* BookCollectionViewCell.swift */; };
+		F3C3D9F32BE9F1D9002BC8FA /* NetworkingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C3D9F22BE9F1D9002BC8FA /* NetworkingManager.swift */; };
+		F3C3D9F52BE9F651002BC8FA /* BookData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C3D9F42BE9F651002BC8FA /* BookData.swift */; };
+		F3C3D9F82BE9FBC9002BC8FA /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = F3C3D9F72BE9FBC9002BC8FA /* Kingfisher */; };
 		F3CD79212BE4EFD40041CF88 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CD79202BE4EFD40041CF88 /* TabBarViewController.swift */; };
-		F3CD79232BE4F0960041CF88 /* BookSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CD79222BE4F0960041CF88 /* BookSearchViewController.swift */; };
+		F3CD79232BE4F0960041CF88 /* SearchTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CD79222BE4F0960041CF88 /* SearchTabViewController.swift */; };
 		F3CD79252BE4F4B60041CF88 /* SavedBooksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CD79242BE4F4B60041CF88 /* SavedBooksViewController.swift */; };
 		F3CD79272BE4F4CD0041CF88 /* BookDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CD79262BE4F4CD0041CF88 /* BookDetailViewController.swift */; };
 		F3CD792A2BE6A6FC0041CF88 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = F3CD79292BE6A6FC0041CF88 /* SnapKit */; };
+		F3CD792C2BE8D0BD0041CF88 /* SearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CD792B2BE8D0BD0041CF88 /* SearchResultViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,10 +30,14 @@
 		F3AB4F102BE4EE0100241516 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F3AB4F132BE4EE0100241516 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F3AB4F152BE4EE0100241516 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F3C3D9F02BE9E7D5002BC8FA /* BookCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookCollectionViewCell.swift; sourceTree = "<group>"; };
+		F3C3D9F22BE9F1D9002BC8FA /* NetworkingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingManager.swift; sourceTree = "<group>"; };
+		F3C3D9F42BE9F651002BC8FA /* BookData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookData.swift; sourceTree = "<group>"; };
 		F3CD79202BE4EFD40041CF88 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
-		F3CD79222BE4F0960041CF88 /* BookSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSearchViewController.swift; sourceTree = "<group>"; };
+		F3CD79222BE4F0960041CF88 /* SearchTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTabViewController.swift; sourceTree = "<group>"; };
 		F3CD79242BE4F4B60041CF88 /* SavedBooksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedBooksViewController.swift; sourceTree = "<group>"; };
 		F3CD79262BE4F4CD0041CF88 /* BookDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailViewController.swift; sourceTree = "<group>"; };
+		F3CD792B2BE8D0BD0041CF88 /* SearchResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F3C3D9F82BE9FBC9002BC8FA /* Kingfisher in Frameworks */,
 				F3CD792A2BE6A6FC0041CF88 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -64,8 +74,12 @@
 			children = (
 				F3AB4F072BE4EE0000241516 /* AppDelegate.swift */,
 				F3AB4F092BE4EE0000241516 /* SceneDelegate.swift */,
+				F3C3D9F42BE9F651002BC8FA /* BookData.swift */,
+				F3C3D9F22BE9F1D9002BC8FA /* NetworkingManager.swift */,
 				F3CD79202BE4EFD40041CF88 /* TabBarViewController.swift */,
-				F3CD79222BE4F0960041CF88 /* BookSearchViewController.swift */,
+				F3CD79222BE4F0960041CF88 /* SearchTabViewController.swift */,
+				F3CD792B2BE8D0BD0041CF88 /* SearchResultViewController.swift */,
+				F3C3D9F02BE9E7D5002BC8FA /* BookCollectionViewCell.swift */,
 				F3CD79262BE4F4CD0041CF88 /* BookDetailViewController.swift */,
 				F3CD79242BE4F4B60041CF88 /* SavedBooksViewController.swift */,
 				F3AB4F102BE4EE0100241516 /* Assets.xcassets */,
@@ -93,6 +107,7 @@
 			name = BookStore;
 			packageProductDependencies = (
 				F3CD79292BE6A6FC0041CF88 /* SnapKit */,
+				F3C3D9F72BE9FBC9002BC8FA /* Kingfisher */,
 			);
 			productName = BookStore;
 			productReference = F3AB4F042BE4EE0000241516 /* BookStore.app */;
@@ -124,6 +139,7 @@
 			mainGroup = F3AB4EFB2BE4EE0000241516;
 			packageReferences = (
 				F3CD79282BE6A6FC0041CF88 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				F3C3D9F62BE9FBC9002BC8FA /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = F3AB4F052BE4EE0000241516 /* Products */;
 			projectDirPath = "";
@@ -151,10 +167,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F3CD79232BE4F0960041CF88 /* BookSearchViewController.swift in Sources */,
+				F3C3D9F52BE9F651002BC8FA /* BookData.swift in Sources */,
+				F3CD79232BE4F0960041CF88 /* SearchTabViewController.swift in Sources */,
+				F3C3D9F12BE9E7D5002BC8FA /* BookCollectionViewCell.swift in Sources */,
+				F3CD792C2BE8D0BD0041CF88 /* SearchResultViewController.swift in Sources */,
 				F3CD79212BE4EFD40041CF88 /* TabBarViewController.swift in Sources */,
 				F3CD79252BE4F4B60041CF88 /* SavedBooksViewController.swift in Sources */,
 				F3AB4F082BE4EE0000241516 /* AppDelegate.swift in Sources */,
+				F3C3D9F32BE9F1D9002BC8FA /* NetworkingManager.swift in Sources */,
 				F3AB4F0A2BE4EE0000241516 /* SceneDelegate.swift in Sources */,
 				F3CD79272BE4F4CD0041CF88 /* BookDetailViewController.swift in Sources */,
 			);
@@ -300,6 +320,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7AK6UV4R32;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BookStore/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -312,7 +333,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.test.BookStore;
+				PRODUCT_BUNDLE_IDENTIFIER = com.test.BookStore1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -327,6 +348,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 7AK6UV4R32;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = BookStore/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -339,7 +361,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.test.BookStore;
+				PRODUCT_BUNDLE_IDENTIFIER = com.test.BookStore1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -371,6 +393,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		F3C3D9F62BE9FBC9002BC8FA /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.11.0;
+			};
+		};
 		F3CD79282BE6A6FC0041CF88 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -382,6 +412,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		F3C3D9F72BE9FBC9002BC8FA /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F3C3D9F62BE9FBC9002BC8FA /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		F3CD79292BE6A6FC0041CF88 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F3CD79282BE6A6FC0041CF88 /* XCRemoteSwiftPackageReference "SnapKit" */;
