@@ -76,7 +76,7 @@ class SearchResultViewController: UIViewController {
     }
     
     func fetchBookData() {
-        NetworkingManager.shared.searchBooks(query: "미움받을 용기") { result in
+        NetworkingManager.shared.searchBooks(query: searchKeyword ?? "") { result in
             switch result {
             case .success(let data):
                 do {
