@@ -90,7 +90,6 @@ class BookCollectionViewCell: UICollectionViewCell {
     func setData(with book: Document) {
         titleLabel.text = book.title
         authorLabel.text = book.authors.isEmpty ? "" : book.authors.joined(separator: ", ")
-        priceLabel.text = book.salePrice != nil ? "가격: \(book.salePrice)" : ""
         publisherLabel.text = book.publisher
         
         // 썸네일 이미지 처리

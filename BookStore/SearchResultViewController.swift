@@ -17,6 +17,14 @@ class SearchResultViewController: UIViewController {
     
     var books: [Document] = []
     
+    let resultCountLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .darkGray
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
     let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.searchBarStyle = .minimal
@@ -43,7 +51,7 @@ class SearchResultViewController: UIViewController {
     }
     
     private func setupConstraints() {
-        [searchBar, collectionView].forEach {
+        [searchBar, resultCountLabel, collectionView].forEach {
             view.addSubview($0)
         }
         
@@ -51,8 +59,14 @@ class SearchResultViewController: UIViewController {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview()
         }
+        
+        resultCountLabel.snp.makeConstraints {
+            $0.top.equalTo(searchBar.snp.bottom).offset(16)
+            $0.leading.equalToSuperview().inset(16)
+        }
+        
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(searchBar.snp.bottom)
+            $0.top.equalTo(resultCountLabel.snp.bottom).offset(8)
             $0.leading.trailing.bottom.equalToSuperview().inset(10)
         }
     }
@@ -66,7 +80,7 @@ class SearchResultViewController: UIViewController {
     }
     
     func configureNavigationBar() {
-        navigationItem.title = "검색 결과"
+        navigationItem.title = "검색결과"
     }
     
     func setupSearchBar() {
@@ -76,7 +90,8 @@ class SearchResultViewController: UIViewController {
     }
     
     func fetchBookData() {
-        NetworkingManager.shared.searchBooks(query: "세이노") { result in
+        // query: searchKeyword ?? ""
+        NetworkingManager.shared.searchBooks(query: "하루키") { result in
             switch result {
             case .success(let data):
                 do {
@@ -85,6 +100,7 @@ class SearchResultViewController: UIViewController {
                     self.books = decodedData.documents
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()
+                        self.resultCountLabel.text = "검색결과 \(self.books.count)"
                     }
                 } catch {
                     print("Failed to parse data: \(error.localizedDescription)")
