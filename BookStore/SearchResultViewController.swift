@@ -9,18 +9,13 @@ import UIKit
 
 class SearchResultViewController: UIViewController {
     
-    var searchKeyword: String? {
-        didSet {
-            
-        }
-    }
+    var searchKeyword: String?
     
     var books: [Document] = []
     
     let resultCountLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .darkGray
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -81,6 +76,8 @@ class SearchResultViewController: UIViewController {
     
     func configureNavigationBar() {
         navigationItem.title = "검색결과"
+//        navigationController?.navigationBar.tintColor = .darkGray
+        self.navigationController?.navigationBar.topItem?.title = ""
     }
     
     func setupSearchBar() {
@@ -91,6 +88,7 @@ class SearchResultViewController: UIViewController {
     
     func fetchBookData() {
         // query: searchKeyword ?? ""
+        // 하루키
         NetworkingManager.shared.searchBooks(query: "하루키") { result in
             switch result {
             case .success(let data):
@@ -114,7 +112,15 @@ class SearchResultViewController: UIViewController {
 }
 
 extension SearchResultViewController: UISearchBarDelegate {
-    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchText = searchBar.text else { return }
+        print("검색어: \(searchText)")
+        
+        searchKeyword = searchText
+        fetchBookData()
+        
+        searchBar.resignFirstResponder()
+    }
 }
 
 extension SearchResultViewController: UICollectionViewDataSource, UICollectionViewDelegate {

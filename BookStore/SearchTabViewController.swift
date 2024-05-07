@@ -51,6 +51,7 @@ class SearchTabViewController: UIViewController {
             $0.edges.equalToSuperview().inset(5)
         }
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: logoContainer)
+        navigationController?.navigationBar.tintColor = .darkGray
     }
     
     
