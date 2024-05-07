@@ -17,6 +17,7 @@ class SearchTabViewController: UIViewController {
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         return searchBar
     }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -30,10 +31,7 @@ class SearchTabViewController: UIViewController {
     }
     
     func setupConstraints() {
-        
-        //        [searchBar].forEach {
-        //            view.addSubview($0)
-        //        }
+       
         view.addSubview(searchBar)
         
         searchBar.snp.makeConstraints {
@@ -63,6 +61,7 @@ extension SearchTabViewController: UISearchBarDelegate {
         print("검색어: \(searchText)")
         
         let searchResultVC = SearchResultViewController()
+        searchResultVC.searchKeyword = searchText
         navigationController?.pushViewController(searchResultVC, animated: true)
     }
 }
