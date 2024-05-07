@@ -62,7 +62,7 @@ class SearchResultViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(BookCollectionViewCell.self, forCellWithReuseIdentifier: BookCollectionViewCell.identifier)
-        collectionView.backgroundColor = .yellow
+        collectionView.backgroundColor = .clear
     }
     
     func configureNavigationBar() {
@@ -76,7 +76,7 @@ class SearchResultViewController: UIViewController {
     }
     
     func fetchBookData() {
-        NetworkingManager.shared.searchBooks(query: searchKeyword ?? "") { result in
+        NetworkingManager.shared.searchBooks(query: "세이노") { result in
             switch result {
             case .success(let data):
                 do {
@@ -120,10 +120,10 @@ extension SearchResultViewController: UICollectionViewDelegateFlowLayout {
            let paddingSpace = 5 * 4
            let availableWidth = collectionView.bounds.width - CGFloat(paddingSpace)
            let widthPerItem = availableWidth / 3
-           return CGSize(width: widthPerItem, height: 180)
+           return CGSize(width: widthPerItem, height: 280)
        }
 }
-//#Preview {
-//    SearchResultViewController()
-//    // 화면 업데이트: command+option+p
-//}
+#Preview {
+    SearchResultViewController()
+    // 화면 업데이트: command+option+p
+}

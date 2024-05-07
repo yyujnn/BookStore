@@ -16,12 +16,13 @@ class BookCollectionViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 10
         return imageView
     }()
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = UIFont.boldSystemFont(ofSize: 17)
         label.numberOfLines = 2
         return label
     }()
@@ -55,13 +56,13 @@ class BookCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupConstraints() {
-        [thumbnailImageView, titleLabel, authorLabel, priceLabel, publisherLabel].forEach {
+        [thumbnailImageView, titleLabel, authorLabel, publisherLabel].forEach {
             contentView.addSubview($0)
         }
         
         thumbnailImageView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
-            $0.height.equalTo(contentView.snp.width).multipliedBy(0.8) // 이미지 높이를 셀의 너비의 80%로 설정
+            $0.top.equalToSuperview()
+            $0.width.equalTo(contentView.snp.width)
         }
         
         titleLabel.snp.makeConstraints {
@@ -74,13 +75,8 @@ class BookCollectionViewCell: UICollectionViewCell {
             $0.leading.trailing.equalToSuperview().inset(5)
         }
         
-        priceLabel.snp.makeConstraints {
-            $0.top.equalTo(authorLabel.snp.bottom).offset(3)
-            $0.leading.trailing.equalToSuperview().inset(5)
-        }
-        
         publisherLabel.snp.makeConstraints {
-            $0.top.equalTo(priceLabel.snp.bottom).offset(3)
+            $0.top.equalTo(authorLabel.snp.bottom).offset(3)
             $0.leading.trailing.equalToSuperview().inset(5)
             $0.bottom.lessThanOrEqualToSuperview().inset(5)
         }
@@ -88,22 +84,20 @@ class BookCollectionViewCell: UICollectionViewCell {
     }
     
     private func configureUI() {
-        backgroundColor = .blue
+        backgroundColor = .white
     }
     
     func setData(with book: Document) {
         titleLabel.text = book.title
-        authorLabel.text = book.authors?.isEmpty ?? true ? "" : book.authors!.joined(separator: ", ")
-        priceLabel.text = book.salePrice != nil ? "가격: \(book.salePrice!)" : ""
-        publisherLabel.text = book.publisher ?? ""
+        authorLabel.text = book.authors.isEmpty ? "" : book.authors.joined(separator: ", ")
+        priceLabel.text = book.salePrice != nil ? "가격: \(book.salePrice)" : ""
+        publisherLabel.text = book.publisher
         
         // 썸네일 이미지 처리
-        if let thumbnailURL = URL(string: book.thumbnail ?? "") {
+        if let thumbnailURL = URL(string: book.thumbnail) {
             thumbnailImageView.kf.setImage(with: thumbnailURL)
         } else {
-            // 썸네일 URL이 없는 경우 기본 이미지 또는 에러 처리를 수행할 수 있습니다.
             thumbnailImageView.image = UIImage(named: "placeholder")
         }
     }
-
 }
