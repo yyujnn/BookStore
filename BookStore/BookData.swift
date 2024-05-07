@@ -8,17 +8,21 @@
 import Foundation
 
 struct BookData: Codable {
+    let documents: [Document]
+}
+
+struct Document: Codable {
     let title: String
-    let contents: String
+    let contents: String?
     let url: String
     let isbn: String
     let datetime: String
-    let authors: [String]
-    let publisher: String
-    let translators: [String]
+    let authors: [String]?
+    let publisher: String?
+    let translators: [String]?
     let price: Int
-    let salePrice: Int
-    let thumbnail: String
+    let salePrice: Int?
+    let thumbnail: String?
     let status: String
     
     enum CodingKeys: String, CodingKey {
