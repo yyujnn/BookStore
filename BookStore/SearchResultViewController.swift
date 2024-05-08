@@ -89,7 +89,7 @@ class SearchResultViewController: UIViewController {
     func fetchBookData() {
         // query: searchKeyword ?? ""
         // 하루키
-        NetworkingManager.shared.searchBooks(query: "하루키") { result in
+        NetworkingManager.shared.searchBooks(query: searchKeyword ?? "") { result in
             switch result {
             case .success(let data):
                 do {
@@ -145,7 +145,7 @@ extension SearchResultViewController: UICollectionViewDelegate {
     
     private func showBookDetailModal(book: Document) {
         let bookDetailVC = BookDetailViewController()
-        // bookDetailVC.book = book
+         bookDetailVC.book = book
         
         self.modalPresentationStyle = .fullScreen
         self.present(bookDetailVC, animated: true, completion: nil)
