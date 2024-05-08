@@ -123,7 +123,7 @@ extension SearchResultViewController: UISearchBarDelegate {
     }
 }
 
-extension SearchResultViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+extension SearchResultViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return books.count
     }
@@ -137,6 +137,22 @@ extension SearchResultViewController: UICollectionViewDataSource, UICollectionVi
     }
 }
 
+extension SearchResultViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedBook = books[indexPath.item]
+        showBookDetailModal(book: selectedBook)
+    }
+    
+    private func showBookDetailModal(book: Document) {
+        let bookDetailVC = BookDetailViewController()
+        // bookDetailVC.book = book
+        
+        self.modalPresentationStyle = .fullScreen
+        self.present(bookDetailVC, animated: true, completion: nil)
+    }
+}
+
+
 extension SearchResultViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
            let paddingSpace = 5 * 4
@@ -145,7 +161,7 @@ extension SearchResultViewController: UICollectionViewDelegateFlowLayout {
            return CGSize(width: widthPerItem, height: 280)
        }
 }
-#Preview {
-    SearchResultViewController()
-    // 화면 업데이트: command+option+p
-}
+//#Preview {
+//    SearchResultViewController()
+//    // 화면 업데이트: command+option+p
+//}
