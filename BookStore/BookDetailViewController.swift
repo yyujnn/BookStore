@@ -100,6 +100,7 @@ class BookDetailViewController: UIViewController {
             
         return button
     }()
+
     
     private let saveButton: UIButton = {
         let button = UIButton()
@@ -143,6 +144,7 @@ class BookDetailViewController: UIViewController {
         displayBookDetails()
         setupScrollView()
         setupButtonStackView()
+        setupCloseButton()
     }
     
     
@@ -177,6 +179,14 @@ class BookDetailViewController: UIViewController {
             $0.bottom.equalToSuperview().inset(45)
             $0.leading.trailing.equalTo(buttonView).inset(20)
         }
+    }
+    
+    private func setupCloseButton() {
+        closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+    }
+    
+    @objc private func closeButtonTapped() {
+        dismiss(animated: true, completion: nil)
     }
     
     private func setupConstraints() {
