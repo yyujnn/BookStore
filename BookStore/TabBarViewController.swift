@@ -20,6 +20,7 @@ class TabBarViewController: UITabBarController {
     func configureUI() {
         self.view.backgroundColor = .white
         self.tabBar.backgroundColor = .systemGray5
+        self.tabBar.tintColor = .black
     }
     
     func configureTabItem() {
@@ -28,11 +29,8 @@ class TabBarViewController: UITabBarController {
         let savedBooksVC = SavedBooksViewController()
         let searchNav = UINavigationController(rootViewController: searchVC)
         
-        searchVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
-        savedBooksVC.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
-        
-        // 아이템 이미지 추가
-        //secondVC.tabBarItem = UITabBarItem(title: "Second", image: UIImage(systemName: "2.circle"), selectedImage: UIImage(systemName: "2.circle.fill"))
+        searchVC.tabBarItem = UITabBarItem(title: "검색", image: UIImage(named: "searchIcon"), selectedImage: nil)
+        savedBooksVC.tabBarItem = UITabBarItem(title: "내서재", image: UIImage(named: "saveIcon"), selectedImage: nil)
 
         self.viewControllers = [searchNav, savedBooksVC]
         self.selectedIndex = 0
