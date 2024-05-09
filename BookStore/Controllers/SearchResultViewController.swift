@@ -94,7 +94,7 @@ class SearchResultViewController: UIViewController {
             case .success(let data):
                 do {
                     let decodedData = try JSONDecoder().decode(BookData.self, from: data)
-                    print("Decoded data: \(decodedData)")
+//                    print("Decoded data: \(decodedData)")
                     self.books = decodedData.documents
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()

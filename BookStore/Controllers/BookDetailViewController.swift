@@ -29,7 +29,6 @@ class BookDetailViewController: UIViewController {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        // 여기에 이미지 설정 및 흐리게 처리 로직 추가
         return imageView
     }()
     
@@ -115,8 +114,24 @@ class BookDetailViewController: UIViewController {
         button.backgroundColor = .black
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
+        
+        button.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         return button
     }()
+    
+    @objc private func saveButtonTapped() {
+  
+        guard let book = book else { return }
+        print("담는 책 제목: \(book.title)")
+        
+        CoreDataManager.saveBookData(book: book) { success in
+            if success {
+                print("CoreData 저장 성공")
+            } else {
+                print("CoreData 저장 실패")
+            }
+        }
+    }
     
     private lazy var buttonStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [closeButton, saveButton])
@@ -247,7 +262,6 @@ class BookDetailViewController: UIViewController {
         contentsLabel.snp.makeConstraints {
             $0.top.equalTo(borderView2.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.bottom.equalTo(contentView.snp.bottom)
         }
     }
     
@@ -271,25 +285,6 @@ class BookDetailViewController: UIViewController {
         publisherLabel.text = book.publisher
         priceLabel.text = book.price.formattedPriceWithWon()
         contentsLabel.text = book.contents
-         
-        /*
-        // temp data
-        if let thumbnailURL = URL(string: "https://search1.kakaocdn.net/thumb/R120x174.q85/?fname=http%3A%2F%2Ft1.daumcdn.net%2Flbook%2Fimage%2F1467038") {
-            let options: KingfisherOptionsInfo = [
-                .processor(BlurImageProcessor(blurRadius: 30)),
-                .cacheOriginalImage
-            ]
-            
-            thumbnailImageView.kf.setImage(with: thumbnailURL)
-            blurredImageView.kf.setImage(with: thumbnailURL, options: options)
-        }
-        
-        titleLabel.text = "미움받을 용기"
-        authorsLabel.text = "기시미 이치로 지음"
-        publisherLabel.text = "인플루엔셜"
-        priceLabel.text = "14,900원"
-        contentsLabel.text = "인간은 변할 수 있고, 누구나 행복해 질 수 있다. 단 그러기 위해서는 ‘용기’가 필요하다고 말한 철학자가 있다. ㄱ바로 프로이트, 융과 함께 ‘심리학의 3대 거장’으로 일컬어지고 있는 알프레드 아들러다. 『미움받을 용기』는 아들러 심리학에 관한 일본의 1인자 철학자 기시미 이치로와 베스트셀러 작가인 고가 후미타케의 저서로, 아들러의 심리학을 ‘대화체’로 쉽고 맛깔나게 정리하고 있다. 아들러 심리학을 공부한 철학자와 세상에 부정적이고 열등감 많은인간은 변할 수 있고, 누구나 행복해 질 수 있다. 단 그러기 위해서는 ‘용기’가 필요하다고 말한 철학자가 있다. ㄱ바로 프로이트, 융과 함께 ‘심리학의 3대 거장’으로 일컬어지고 있는 알프레드 아들러다. 『미움받을 용기』는 아들러 심리학에 관한 일본의 1인자 철학자 기시미 이치로와 베스트셀러 작가인 고가 후미타케의 저서로, 아들러의 심리학을 ‘대화체’로 쉽고 맛깔나게 정리하고 있다. 아들러 심리학을 공부한 철학자와 세상에 부정적이고 열등감 많은"
-         */
         
     }
     

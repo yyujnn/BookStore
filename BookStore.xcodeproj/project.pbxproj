@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		F31F39C92BEB8F9E002610FB /* Int+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31F39C82BEB8F9E002610FB /* Int+.swift */; };
+		F31F39D12BEBA294002610FB /* BookList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F31F39CF2BEBA294002610FB /* BookList.xcdatamodeld */; };
+		F31F39D72BEBCC1F002610FB /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31F39D62BEBCC1F002610FB /* CoreDataManager.swift */; };
+		F39FCDDA2BEBEE8C00F5431C /* Book+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39FCDD82BEBEE8C00F5431C /* Book+CoreDataClass.swift */; };
+		F39FCDDB2BEBEE8C00F5431C /* Book+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39FCDD92BEBEE8C00F5431C /* Book+CoreDataProperties.swift */; };
 		F3AB4F082BE4EE0000241516 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AB4F072BE4EE0000241516 /* AppDelegate.swift */; };
 		F3AB4F0A2BE4EE0000241516 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AB4F092BE4EE0000241516 /* SceneDelegate.swift */; };
 		F3AB4F112BE4EE0100241516 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F3AB4F102BE4EE0100241516 /* Assets.xcassets */; };
@@ -26,6 +30,10 @@
 
 /* Begin PBXFileReference section */
 		F31F39C82BEB8F9E002610FB /* Int+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+.swift"; sourceTree = "<group>"; };
+		F31F39D02BEBA294002610FB /* BookList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BookList.xcdatamodel; sourceTree = "<group>"; };
+		F31F39D62BEBCC1F002610FB /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		F39FCDD82BEBEE8C00F5431C /* Book+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Book+CoreDataClass.swift"; sourceTree = "<group>"; };
+		F39FCDD92BEBEE8C00F5431C /* Book+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Book+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		F3AB4F042BE4EE0000241516 /* BookStore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BookStore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3AB4F072BE4EE0000241516 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F3AB4F092BE4EE0000241516 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +67,9 @@
 			isa = PBXGroup;
 			children = (
 				F3C3D9F42BE9F651002BC8FA /* BookData.swift */,
+				F31F39D62BEBCC1F002610FB /* CoreDataManager.swift */,
+				F39FCDD82BEBEE8C00F5431C /* Book+CoreDataClass.swift */,
+				F39FCDD92BEBEE8C00F5431C /* Book+CoreDataProperties.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -126,6 +137,7 @@
 				F31F39CD2BEB94AD002610FB /* Controllers */,
 				F31F39CE2BEB94BD002610FB /* Views */,
 				F3AB4F102BE4EE0100241516 /* Assets.xcassets */,
+				F31F39CF2BEBA294002610FB /* BookList.xcdatamodeld */,
 				F3AB4F122BE4EE0100241516 /* LaunchScreen.storyboard */,
 				F3AB4F152BE4EE0100241516 /* Info.plist */,
 			);
@@ -212,12 +224,16 @@
 			files = (
 				F3C3D9F52BE9F651002BC8FA /* BookData.swift in Sources */,
 				F3CD79232BE4F0960041CF88 /* SearchTabViewController.swift in Sources */,
+				F39FCDDA2BEBEE8C00F5431C /* Book+CoreDataClass.swift in Sources */,
 				F3C3D9F12BE9E7D5002BC8FA /* BookCollectionViewCell.swift in Sources */,
+				F31F39D72BEBCC1F002610FB /* CoreDataManager.swift in Sources */,
 				F3CD792C2BE8D0BD0041CF88 /* SearchResultViewController.swift in Sources */,
 				F31F39C92BEB8F9E002610FB /* Int+.swift in Sources */,
 				F3CD79212BE4EFD40041CF88 /* TabBarViewController.swift in Sources */,
+				F39FCDDB2BEBEE8C00F5431C /* Book+CoreDataProperties.swift in Sources */,
 				F3CD79252BE4F4B60041CF88 /* SavedBooksViewController.swift in Sources */,
 				F3AB4F082BE4EE0000241516 /* AppDelegate.swift in Sources */,
+				F31F39D12BEBA294002610FB /* BookList.xcdatamodeld in Sources */,
 				F3C3D9F32BE9F1D9002BC8FA /* NetworkingManager.swift in Sources */,
 				F3AB4F0A2BE4EE0000241516 /* SceneDelegate.swift in Sources */,
 				F3CD79272BE4F4CD0041CF88 /* BookDetailViewController.swift in Sources */,
@@ -467,6 +483,19 @@
 			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		F31F39CF2BEBA294002610FB /* BookList.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F31F39D02BEBA294002610FB /* BookList.xcdatamodel */,
+			);
+			currentVersion = F31F39D02BEBA294002610FB /* BookList.xcdatamodel */;
+			path = BookList.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = F3AB4EFC2BE4EE0000241516 /* Project object */;
 }
