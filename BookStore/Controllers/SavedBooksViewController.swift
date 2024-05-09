@@ -9,7 +9,7 @@ import UIKit
 
 class SavedBooksViewController: UIViewController {
     
-    var savedBooks: [Book] = [] // 저장된 책 목록
+    var savedBooks: [Book] = []
     
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -39,23 +39,22 @@ class SavedBooksViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        configureUI()
         setupConstraints()
     }
     
-    private func setupUI() {
-        view.backgroundColor = .white
+    private func configureUI() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(BookTableViewCell.self, forCellReuseIdentifier: BookTableViewCell.identifier)
-    
-        view.addSubview(titleLabel)
-        view.addSubview(bookCountLabel)
-        view.addSubview(tableView)
     }
     
-    // MARK: - Constraints Setup
+    // MARK: - 레이아웃 설정
     private func setupConstraints() {
+        [titleLabel, bookCountLabel, tableView].forEach {
+            view.addSubview($0)
+        }
+        
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(16)
             $0.leading.equalToSuperview().offset(16)
@@ -78,7 +77,7 @@ class SavedBooksViewController: UIViewController {
         self.tableView.reloadData()
         self.bookCountLabel.text = "전체 \(savedBooks.count)권"
     }
-    
+
 }
 // MARK: - UITableViewDataSource
 extension SavedBooksViewController: UITableViewDataSource {
@@ -90,30 +89,30 @@ extension SavedBooksViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: BookTableViewCell.identifier, for: indexPath) as? BookTableViewCell else {
             return UITableViewCell()
         }
-        
         let book = savedBooks[indexPath.row]
         cell.setData(book)
+        
         return cell
     }
 }
 
 // MARK: - UITableViewDelegate
 extension SavedBooksViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
     }
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            
             let bookToDelete = savedBooks[indexPath.row]
-            // CoreDataManager를 사용하여 책 삭제
+
             CoreDataManager.deleteBookData(book: bookToDelete) { success in
                 if success {
                     self.loadSavedBooks()
-                    print("삭제!")
                 } else {
-                    let alert = UIAlertController(title: "Notice", message: "책을 삭제하는 데 문제가 발생했습니다.", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
+                    print("데이터 삭제 실패")
                 }
             }
         }

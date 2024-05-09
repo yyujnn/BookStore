@@ -11,14 +11,11 @@ class RecentBooksManager {
     static let shared = RecentBooksManager()
       
     private var recentBooks: [Document] = []
-    
-    // 최근 본 책 목록을 추가하는 함수 (가장 앞에 담기)
+ 
     func addRecentBook(_ book: Document) {
         recentBooks.insert(book, at: 0)
     }
     
-    
-    // 최근 본 책 목록을 반환하는 함수
     func getRecentBooks() -> [Document] {
         return recentBooks
     }

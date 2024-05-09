@@ -13,6 +13,7 @@ class BookDetailViewController: UIViewController {
     
     var book: Document?
     
+    // MARK: - 컴포넌트
     private var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -159,7 +160,7 @@ class BookDetailViewController: UIViewController {
     }
     
     
-    // MARK: - Constraints Setup
+    // MARK: - 레이아웃 설정
     private func setupScrollView() {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
@@ -278,7 +279,7 @@ class BookDetailViewController: UIViewController {
         }
     }
     
-    // MARK: - 화면 데이터
+    // MARK: - 화면 데이터 설정
     func displayBookDetails() {
         guard let book = book else { return }
         

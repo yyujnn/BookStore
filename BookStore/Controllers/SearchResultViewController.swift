@@ -13,6 +13,7 @@ class SearchResultViewController: UIViewController {
     
     var books: [Document] = []
     
+    // MARK: - 컴포넌트
     let resultCountLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 16)
@@ -85,6 +86,7 @@ class SearchResultViewController: UIViewController {
         }
     }
     
+    // MARK: - 검색 결과 데이터
     func fetchBookData() {
         NetworkingManager.shared.searchBooks(query: searchKeyword ?? "") { result in
             switch result {
@@ -106,7 +108,7 @@ class SearchResultViewController: UIViewController {
         }
     }
 }
-
+// MARK: - UISearchBarDelegate
 extension SearchResultViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text else { return }
@@ -119,6 +121,7 @@ extension SearchResultViewController: UISearchBarDelegate {
     }
 }
 
+// MARK: - UICollectionView
 extension SearchResultViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return books.count
