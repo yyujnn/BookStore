@@ -46,6 +46,20 @@ class SearchResultViewController: UIViewController {
         fetchBookData()
     }
     
+    // MARK: - UI 구성
+    func setupSearchBar() {
+        if let searchKeyword  = searchKeyword {
+            searchBar.text = searchKeyword
+        }
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
     private func setupConstraints() {
         [searchBar, resultCountLabel, collectionView].forEach {
             view.addSubview($0)
@@ -78,12 +92,6 @@ class SearchResultViewController: UIViewController {
     func configureNavigationBar() {
         navigationItem.title = "검색결과"
         self.navigationController?.navigationBar.topItem?.title = ""
-    }
-    
-    func setupSearchBar() {
-        if let searchKeyword  = searchKeyword {
-            searchBar.text = searchKeyword
-        }
     }
     
     // MARK: - 검색 결과 데이터

@@ -37,9 +37,7 @@ class SearchTabViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("will appear")
-        recentBooks = RecentBooksManager.shared.getRecentBooks()
-        collectionView.reloadData()
+        loadRecentBooks()
     }
     
     override func viewDidLoad() {
@@ -48,7 +46,23 @@ class SearchTabViewController: UIViewController {
         setupConstraints()
         configureUI()
         configureNavigationBar()
-        
+        setupTapGesture()
+    }
+    
+    // MARK: - UI 구성
+    func loadRecentBooks() {
+        recentBooks = RecentBooksManager.shared.getRecentBooks()
+        collectionView.reloadData()
+    }
+    
+    func setupTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     func configureUI() {
