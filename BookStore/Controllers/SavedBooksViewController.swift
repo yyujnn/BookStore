@@ -102,4 +102,20 @@ extension SavedBooksViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
     }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let bookToDelete = savedBooks[indexPath.row]
+            // CoreDataManager를 사용하여 책 삭제
+            CoreDataManager.deleteBookData(book: bookToDelete) { success in
+                if success {
+                    self.loadSavedBooks()
+                    print("삭제!")
+                } else {
+                    let alert = UIAlertController(title: "Notice", message: "책을 삭제하는 데 문제가 발생했습니다.", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+        }
+    }
 }

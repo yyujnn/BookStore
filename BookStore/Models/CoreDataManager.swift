@@ -22,7 +22,7 @@ class CoreDataManager {
     
     // MARK: - SAVE
     static func saveBookData(book: Document, completion: @escaping (Bool) -> Void) {
-        guard let context = CoreDataManager.context else {
+        guard let context = context else {
             completion(false)
             return
         }
@@ -58,6 +58,24 @@ class CoreDataManager {
         } catch {
             print("코어 데이터 fetch error: \(error.localizedDescription)")
             return []
+        }
+    }
+    
+    // MARK: - DELETE
+    static func deleteBookData(book: Book, completion: @escaping (Bool) -> Void) {
+        guard let context = context else {
+            completion(false)
+            return
+        }
+        
+        context.delete(book)
+        
+        do {
+            try context.save()
+            completion(true)
+        } catch {
+            print("코어데이터 delete error: \(error.localizedDescription)")
+            completion(false)
         }
     }
 }
