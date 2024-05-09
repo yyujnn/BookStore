@@ -152,14 +152,13 @@ extension SearchResultViewController: UICollectionViewDelegate {
     }
 }
 
-
 extension SearchResultViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-           let paddingSpace = 5 * 4
-           let availableWidth = collectionView.bounds.width - CGFloat(paddingSpace)
-           let widthPerItem = availableWidth / 3
-           return CGSize(width: widthPerItem, height: 280)
-       }
+        let paddingSpace = 5 * 4
+        let availableWidth = collectionView.bounds.width - CGFloat(paddingSpace)
+        let widthPerItem = availableWidth / 3
+        return CGSize(width: widthPerItem, height: 280)
+    }
 }
 //#Preview {
 //    SearchResultViewController()
