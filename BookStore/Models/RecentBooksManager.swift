@@ -11,8 +11,12 @@ class RecentBooksManager {
     static let shared = RecentBooksManager()
       
     private var recentBooks: [Document] = []
+    private let maxRecentBooksCount = 10
  
     func addRecentBook(_ book: Document) {
+        if recentBooks.count >= maxRecentBooksCount {
+            recentBooks.removeLast()
+        }
         recentBooks.insert(book, at: 0)
     }
     
