@@ -99,18 +99,4 @@ class BookCollectionViewCell: UICollectionViewCell {
             thumbnailImageView.image = UIImage(named: "placeholder")
         }
     }
-    
-    func displaySavedBook(_ book: Book) {
-        titleLabel.text = book.title
-        authorLabel.text = book.authors?.isEmpty ?? true ? "" : (book.authors?.joined(separator: ", ") ?? "")
-        publisherLabel.text = book.publisher
-        
-        // 썸네일 이미지 처리
-        if let thumbnailURL = book.thumbnail, let thumbnailURL = URL(string: thumbnailURL) {
-            thumbnailImageView.kf.setImage(with: thumbnailURL, placeholder: UIImage(named: "placeholder"))
-        } else {
-            thumbnailImageView.image = UIImage(named: "placeholder")
-        }
-    }
-
 }

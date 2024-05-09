@@ -25,13 +25,11 @@ class SavedBooksViewController: UIViewController {
         return label
     }()
     
-    let collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = .white
-        return collectionView
+    let tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.backgroundColor = .white
+        return tableView
     }()
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,16 +45,16 @@ class SavedBooksViewController: UIViewController {
     
     private func setupUI() {
         view.backgroundColor = .white
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.register(BookCollectionViewCell.self, forCellWithReuseIdentifier: BookCollectionViewCell.identifier)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(BookTableViewCell.self, forCellReuseIdentifier: BookTableViewCell.identifier)
+    
         view.addSubview(titleLabel)
         view.addSubview(bookCountLabel)
-        view.addSubview(collectionView)
+        view.addSubview(tableView)
     }
     
     // MARK: - Constraints Setup
-    
     private func setupConstraints() {
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(16)
@@ -68,7 +66,7 @@ class SavedBooksViewController: UIViewController {
             $0.leading.equalToSuperview().offset(16)
         }
         
-        collectionView.snp.makeConstraints {
+        tableView.snp.makeConstraints {
             $0.top.equalTo(bookCountLabel.snp.bottom).offset(16)
             $0.leading.trailing.bottom.equalToSuperview()
         }
@@ -77,35 +75,31 @@ class SavedBooksViewController: UIViewController {
     // MARK: - 코어데이터 불러오기
     func loadSavedBooks() {
         savedBooks = CoreDataManager.fetchCoreData()
-        self.collectionView.reloadData()
+        self.tableView.reloadData()
         self.bookCountLabel.text = "전체 \(savedBooks.count)권"
     }
     
 }
-// MARK: - UICollectionViewDataSource
-
-extension SavedBooksViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+// MARK: - UITableViewDataSource
+extension SavedBooksViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return savedBooks.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookCollectionViewCell.identifier, for: indexPath) as? BookCollectionViewCell else {
-            return UICollectionViewCell()
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: BookTableViewCell.identifier, for: indexPath) as? BookTableViewCell else {
+            return UITableViewCell()
         }
         
-        let book = savedBooks[indexPath.item]
-        cell.displaySavedBook(book)
+        let book = savedBooks[indexPath.row]
+        cell.setData(book)
         return cell
     }
 }
 
-// MARK: - UICollectionViewDelegateFlowLayout
-extension SavedBooksViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let paddingSpace = 5 * 4
-        let availableWidth = collectionView.bounds.width - CGFloat(paddingSpace)
-        let widthPerItem = availableWidth / 3
-        return CGSize(width: widthPerItem, height: 280)
+// MARK: - UITableViewDelegate
+extension SavedBooksViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 120
     }
 }
