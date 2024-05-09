@@ -159,7 +159,6 @@ class BookDetailViewController: UIViewController {
         }
     }
     
-    
     // MARK: - 레이아웃 설정
     private func setupScrollView() {
         view.addSubview(scrollView)
@@ -266,19 +265,27 @@ class BookDetailViewController: UIViewController {
     }
     
     @objc private func saveButtonTapped() {
-        
         guard let book = book else { return }
         print("담는 책 제목: \(book.title)")
         
-        CoreDataManager.saveBookData(book: book) { success in
-            if success {
-                print("CoreData 저장 성공")
-            } else {
-                print("CoreData 저장 실패")
+        let alertController = UIAlertController(title: "내 서재에 담기", message: "책을 저장하시겠습니까?", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        let saveAction = UIAlertAction(title: "저장", style: .default) { _ in
+            CoreDataManager.saveBookData(book: book) { success in
+                if success {
+                    print("CoreData 저장 성공")
+                } else {
+                    print("CoreData 저장 실패")
+                }
             }
         }
+        
+        alertController.addAction(cancelAction)
+        alertController.addAction(saveAction)
+        
+        present(alertController, animated: true, completion: nil)
     }
-    
+
     // MARK: - 화면 데이터 설정
     func displayBookDetails() {
         guard let book = book else { return }
