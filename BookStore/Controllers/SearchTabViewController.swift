@@ -67,7 +67,7 @@ extension SearchTabViewController: UISearchBarDelegate {
         navigationController?.pushViewController(searchResultVC, animated: true)
     }
 }
-#Preview {
-    SearchTabViewController()
-    // 화면 업데이트: command+option+p
-}
+//#Preview {
+//    SearchTabViewController()
+//    // 화면 업데이트: command+option+p
+//}

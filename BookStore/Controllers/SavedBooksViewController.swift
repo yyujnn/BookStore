@@ -9,7 +9,7 @@ import UIKit
 
 class SavedBooksViewController: UIViewController {
     
-    var savedBooks: [Document] = [] // 저장된 책 목록
+    var savedBooks: [Book] = [] // 저장된 책 목록
     
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -22,7 +22,6 @@ class SavedBooksViewController: UIViewController {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = .gray
-        label.text = "총 8권"
         return label
     }()
     
@@ -34,6 +33,11 @@ class SavedBooksViewController: UIViewController {
         collectionView.backgroundColor = .white
         return collectionView
     }()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadSavedBooks()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,6 +73,14 @@ class SavedBooksViewController: UIViewController {
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
+    
+    // MARK: - 코어데이터 불러오기
+    func loadSavedBooks() {
+        savedBooks = CoreDataManager.fetchCoreData()
+        self.collectionView.reloadData()
+        self.bookCountLabel.text = "전체 \(savedBooks.count)권"
+    }
+    
 }
 // MARK: - UICollectionViewDataSource
 
@@ -83,13 +95,12 @@ extension SavedBooksViewController: UICollectionViewDataSource {
         }
         
         let book = savedBooks[indexPath.item]
-        cell.setData(with: book)
+        cell.displaySavedBook(book)
         return cell
     }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
-
 extension SavedBooksViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let paddingSpace = 5 * 4

@@ -114,24 +114,8 @@ class BookDetailViewController: UIViewController {
         button.backgroundColor = .black
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
-        
-        button.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
         return button
     }()
-    
-    @objc private func saveButtonTapped() {
-  
-        guard let book = book else { return }
-        print("담는 책 제목: \(book.title)")
-        
-        CoreDataManager.saveBookData(book: book) { success in
-            if success {
-                print("CoreData 저장 성공")
-            } else {
-                print("CoreData 저장 실패")
-            }
-        }
-    }
     
     private lazy var buttonStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [closeButton, saveButton])
@@ -159,10 +143,11 @@ class BookDetailViewController: UIViewController {
         displayBookDetails()
         setupScrollView()
         setupButtonStackView()
-        setupCloseButton()
+        setupButtons()
     }
     
     
+    // MARK: - Constraints Setup
     private func setupScrollView() {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
@@ -180,7 +165,6 @@ class BookDetailViewController: UIViewController {
     }
     
     private func setupButtonStackView() {
-
         view.addSubview(buttonView)
         buttonView.addSubview(buttonStackView)
         
@@ -196,13 +180,6 @@ class BookDetailViewController: UIViewController {
         }
     }
     
-    private func setupCloseButton() {
-        closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
-    }
-    
-    @objc private func closeButtonTapped() {
-        dismiss(animated: true, completion: nil)
-    }
     
     private func setupConstraints() {
            
@@ -265,32 +242,46 @@ class BookDetailViewController: UIViewController {
         }
     }
     
-    func displayBookDetails() {
+    // MARK: - 버튼 이벤트 처리
+    private func setupButtons() {
+        closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+        saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+    }
     
+    @objc private func closeButtonTapped() {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @objc private func saveButtonTapped() {
+  
         guard let book = book else { return }
+        print("담는 책 제목: \(book.title)")
         
-        // Set thumbnail image using Kingfisher
+        CoreDataManager.saveBookData(book: book) { success in
+            if success {
+                print("CoreData 저장 성공")
+            } else {
+                print("CoreData 저장 실패")
+            }
+        }
+    }
+    
+    // MARK: - 화면 데이터
+    func displayBookDetails() {
+        guard let book = book else { return }
+    
         if let thumbnailURL = URL(string: book.thumbnail) {
             let options: KingfisherOptionsInfo = [
                 .processor(BlurImageProcessor(blurRadius: 30)),
                 .cacheOriginalImage
             ]
-            
             thumbnailImageView.kf.setImage(with: thumbnailURL)
             blurredImageView.kf.setImage(with: thumbnailURL, options: options)
         }
- 
         titleLabel.text = book.title
         authorsLabel.text = "\(book.authors.joined(separator: ", ")) 지음"
         publisherLabel.text = book.publisher
         priceLabel.text = book.price.formattedPriceWithWon()
         contentsLabel.text = book.contents
-        
     }
-    
 }
-
-//#Preview {
-//    BookDetailViewController()
-//    // 화면 업데이트: command+option+p
-//}
