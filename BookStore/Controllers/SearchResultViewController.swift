@@ -19,7 +19,7 @@ class SearchResultViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
+    
     let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.searchBarStyle = .minimal
@@ -76,7 +76,6 @@ class SearchResultViewController: UIViewController {
     
     func configureNavigationBar() {
         navigationItem.title = "검색결과"
-//        navigationController?.navigationBar.tintColor = .darkGray
         self.navigationController?.navigationBar.topItem?.title = ""
     }
     
@@ -87,14 +86,11 @@ class SearchResultViewController: UIViewController {
     }
     
     func fetchBookData() {
-        // query: searchKeyword ?? ""
-        // 하루키
         NetworkingManager.shared.searchBooks(query: searchKeyword ?? "") { result in
             switch result {
             case .success(let data):
                 do {
                     let decodedData = try JSONDecoder().decode(BookData.self, from: data)
-//                    print("Decoded data: \(decodedData)")
                     self.books = decodedData.documents
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()
@@ -145,7 +141,7 @@ extension SearchResultViewController: UICollectionViewDelegate {
     
     private func showBookDetailModal(book: Document) {
         let bookDetailVC = BookDetailViewController()
-         bookDetailVC.book = book
+        bookDetailVC.book = book
         
         self.modalPresentationStyle = .fullScreen
         self.present(bookDetailVC, animated: true, completion: nil)
@@ -160,7 +156,4 @@ extension SearchResultViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: widthPerItem, height: 280)
     }
 }
-//#Preview {
-//    SearchResultViewController()
-//    // 화면 업데이트: command+option+p
-//}
+

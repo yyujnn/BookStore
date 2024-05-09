@@ -32,7 +32,7 @@ class CoreDataManager {
         bookData.authors = book.authors
         bookData.publisher = book.publisher
         bookData.thumbnail = book.thumbnail
-       
+        
         do {
             try context.save()
             completion(true)
@@ -49,11 +49,6 @@ class CoreDataManager {
         
         do {
             let bookList = try context.fetch(fetchRequest)
-            bookList.forEach {
-                print($0.title ?? "title")
-                print($0.authors ?? ["author"])
-                print($0.publisher ?? "publisher")
-            }
             return bookList
         } catch {
             print("코어 데이터 fetch error: \(error.localizedDescription)")
@@ -79,4 +74,3 @@ class CoreDataManager {
         }
     }
 }
-

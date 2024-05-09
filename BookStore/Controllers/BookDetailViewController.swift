@@ -14,7 +14,7 @@ class BookDetailViewController: UIViewController {
     var book: Document?
     
     private var scrollView: UIScrollView = {
-       let scrollView = UIScrollView()
+        let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         return scrollView
     }()
@@ -70,7 +70,7 @@ class BookDetailViewController: UIViewController {
         label.font = UIFont.boldSystemFont(ofSize: 20)
         return label
     }()
-
+    
     private let borderView2: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.3)
@@ -96,10 +96,10 @@ class BookDetailViewController: UIViewController {
         button.layer.cornerRadius = 8
         button.clipsToBounds = true
         button.widthAnchor.constraint(equalToConstant: 50).isActive = true
-            
+        
         return button
     }()
-
+    
     
     private let saveButton: UIButton = {
         let button = UIButton()
@@ -125,7 +125,7 @@ class BookDetailViewController: UIViewController {
         stackView.spacing = 10
         return stackView
     }()
-
+    
     private lazy var buttonView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -134,8 +134,9 @@ class BookDetailViewController: UIViewController {
         view.layer.borderColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.3).cgColor
         return view
     }()
-
-   
+    
+    
+    // MARK: - viewDidLoad()
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -144,6 +145,17 @@ class BookDetailViewController: UIViewController {
         setupScrollView()
         setupButtonStackView()
         setupButtons()
+        addRecentBook()
+        
+    }
+    
+    // MARK: - 최근 본 책
+    func addRecentBook() {
+        if let book = book {
+            print("책 상세 페이지")
+            print("load 확인: \(RecentBooksManager.shared.getRecentBooks())")
+            RecentBooksManager.shared.addRecentBook(book)
+        }
     }
     
     
@@ -182,7 +194,7 @@ class BookDetailViewController: UIViewController {
     
     
     private func setupConstraints() {
-           
+        
         view.backgroundColor = .white
         
         // Image Constraints
@@ -191,18 +203,18 @@ class BookDetailViewController: UIViewController {
         }
         
         blurredImageView.addSubview(thumbnailImageView)
-
+        
         blurredImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(contentView)
             $0.width.equalToSuperview()
             $0.height.equalTo(500)
         }
-
+        
         thumbnailImageView.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(40)
         }
-
+        
         // Label Constraints
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(blurredImageView.snp.bottom).offset(20)
@@ -253,7 +265,7 @@ class BookDetailViewController: UIViewController {
     }
     
     @objc private func saveButtonTapped() {
-  
+        
         guard let book = book else { return }
         print("담는 책 제목: \(book.title)")
         
@@ -269,7 +281,7 @@ class BookDetailViewController: UIViewController {
     // MARK: - 화면 데이터
     func displayBookDetails() {
         guard let book = book else { return }
-    
+        
         if let thumbnailURL = URL(string: book.thumbnail) {
             let options: KingfisherOptionsInfo = [
                 .processor(BlurImageProcessor(blurRadius: 30)),
