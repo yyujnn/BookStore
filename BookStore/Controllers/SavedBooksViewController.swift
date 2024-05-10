@@ -25,6 +25,16 @@ class SavedBooksViewController: UIViewController {
         return label
     }()
     
+    let moreButton: UIButton = {
+        let button = UIButton(type: .system)
+        if let image = UIImage(systemName: "ellipsis.circle") {
+            let tintedImage = image.withRenderingMode(.alwaysTemplate)
+            button.setImage(tintedImage, for: .normal)
+            button.tintColor = .black
+        }
+        return button
+    }()
+    
     let tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -51,9 +61,10 @@ class SavedBooksViewController: UIViewController {
     
     // MARK: - 레이아웃 설정
     private func setupConstraints() {
-        [titleLabel, bookCountLabel, tableView].forEach {
+        [titleLabel, bookCountLabel, moreButton, tableView].forEach {
             view.addSubview($0)
         }
+        
         
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(16)
@@ -63,6 +74,11 @@ class SavedBooksViewController: UIViewController {
         bookCountLabel.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(8)
             $0.leading.equalToSuperview().offset(16)
+        }
+        
+        moreButton.snp.makeConstraints {
+            $0.centerY.equalTo(titleLabel)
+            $0.trailing.equalToSuperview().inset(16)
         }
         
         tableView.snp.makeConstraints {
@@ -77,6 +93,34 @@ class SavedBooksViewController: UIViewController {
         self.tableView.reloadData()
         self.bookCountLabel.text = "전체 \(savedBooks.count)권"
     }
+    
+    // MARK: - 버튼 설정
+    @objc private func showMoreOptions() {
+        guard let button = navigationItem.rightBarButtonItem else { return }
+        
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        let addAction = UIAlertAction(title: "추가", style: .default) { _ in
+            // 추가 버튼을 눌렀을 때의 동작
+        }
+        
+        let deleteAllAction = UIAlertAction(title: "전체 삭제", style: .destructive) { _ in
+            // 전체 삭제 버튼을 눌렀을 때의 동작
+        }
+        
+        let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        
+        alertController.addAction(addAction)
+        alertController.addAction(deleteAllAction)
+        alertController.addAction(cancelAction)
+        
+        if let popoverController = alertController.popoverPresentationController {
+            popoverController.barButtonItem = button
+        }
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
 
 }
 // MARK: - UITableViewDataSource

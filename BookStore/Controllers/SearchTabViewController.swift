@@ -74,9 +74,9 @@ class SearchTabViewController: UIViewController {
     
     func setupConstraints() {
        
-        view.addSubview(searchBar)
-        view.addSubview(recentBooksLabel)
-        view.addSubview(collectionView)
+        [searchBar, recentBooksLabel, collectionView].forEach {
+            view.addSubview($0)
+        }
         
         searchBar.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
@@ -144,5 +144,20 @@ extension SearchTabViewController: UICollectionViewDelegateFlowLayout {
         let availableWidth = collectionView.bounds.width - CGFloat(paddingSpace)
         let widthPerItem = availableWidth / 3.5
         return CGSize(width: widthPerItem, height: 260)
+    }
+}
+
+extension SearchTabViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedBook = recentBooks[indexPath.item]
+        showBookDetailModal(book: selectedBook)
+    }
+    
+    private func showBookDetailModal(book: Document) {
+        let bookDetailVC = BookDetailViewController()
+        bookDetailVC.book = book
+        
+        self.modalPresentationStyle = .fullScreen
+        self.present(bookDetailVC, animated: true, completion: nil)
     }
 }
