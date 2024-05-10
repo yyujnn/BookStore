@@ -13,13 +13,14 @@ class SearchResultViewController: UIViewController {
     
     var books: [Document] = []
     
+    // MARK: - 컴포넌트
     let resultCountLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
+    
     let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.searchBarStyle = .minimal
@@ -43,6 +44,20 @@ class SearchResultViewController: UIViewController {
         configureNavigationBar()
         setupSearchBar()
         fetchBookData()
+    }
+    
+    // MARK: - UI 구성
+    func setupSearchBar() {
+        if let searchKeyword  = searchKeyword {
+            searchBar.text = searchKeyword
+        }
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     private func setupConstraints() {
@@ -76,25 +91,16 @@ class SearchResultViewController: UIViewController {
     
     func configureNavigationBar() {
         navigationItem.title = "검색결과"
-//        navigationController?.navigationBar.tintColor = .darkGray
         self.navigationController?.navigationBar.topItem?.title = ""
     }
     
-    func setupSearchBar() {
-        if let searchKeyword  = searchKeyword {
-            searchBar.text = searchKeyword
-        }
-    }
-    
+    // MARK: - 검색 결과 데이터
     func fetchBookData() {
-        // query: searchKeyword ?? ""
-        // 하루키
         NetworkingManager.shared.searchBooks(query: searchKeyword ?? "") { result in
             switch result {
             case .success(let data):
                 do {
                     let decodedData = try JSONDecoder().decode(BookData.self, from: data)
-                    print("Decoded data: \(decodedData)")
                     self.books = decodedData.documents
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()
@@ -110,7 +116,7 @@ class SearchResultViewController: UIViewController {
         }
     }
 }
-
+// MARK: - UISearchBarDelegate
 extension SearchResultViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text else { return }
@@ -123,6 +129,7 @@ extension SearchResultViewController: UISearchBarDelegate {
     }
 }
 
+// MARK: - UICollectionView
 extension SearchResultViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return books.count
@@ -145,23 +152,19 @@ extension SearchResultViewController: UICollectionViewDelegate {
     
     private func showBookDetailModal(book: Document) {
         let bookDetailVC = BookDetailViewController()
-         bookDetailVC.book = book
+        bookDetailVC.book = book
         
         self.modalPresentationStyle = .fullScreen
         self.present(bookDetailVC, animated: true, completion: nil)
     }
 }
 
-
 extension SearchResultViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-           let paddingSpace = 5 * 4
-           let availableWidth = collectionView.bounds.width - CGFloat(paddingSpace)
-           let widthPerItem = availableWidth / 3
-           return CGSize(width: widthPerItem, height: 280)
-       }
+        let paddingSpace = 5 * 4
+        let availableWidth = collectionView.bounds.width - CGFloat(paddingSpace)
+        let widthPerItem = availableWidth / 3
+        return CGSize(width: widthPerItem, height: 280)
+    }
 }
-//#Preview {
-//    SearchResultViewController()
-//    // 화면 업데이트: command+option+p
-//}
+

@@ -10,6 +10,8 @@ import SnapKit
 
 class SearchTabViewController: UIViewController {
     
+    var recentBooks: [Document] = []
+    
     let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.placeholder = "Search Books"
@@ -18,26 +20,78 @@ class SearchTabViewController: UIViewController {
         return searchBar
     }()
     
+    let recentBooksLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.text = "최근 본 책"
+        return label
+    }()
+    
+    let collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionView
+    }()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadRecentBooks()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         setupConstraints()
-        setupSearchBar()
+        configureUI()
         configureNavigationBar()
-        
+        setupTapGesture()
     }
     
-    func setupSearchBar() {
+    // MARK: - UI 구성
+    func loadRecentBooks() {
+        recentBooks = RecentBooksManager.shared.getRecentBooks()
+        collectionView.reloadData()
+    }
+    
+    func setupTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    func configureUI() {
         searchBar.delegate = self
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(BookCollectionViewCell.self, forCellWithReuseIdentifier: BookCollectionViewCell.identifier)
     }
     
     func setupConstraints() {
        
-        view.addSubview(searchBar)
+        [searchBar, recentBooksLabel, collectionView].forEach {
+            view.addSubview($0)
+        }
         
         searchBar.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
-            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.leading.trailing.equalToSuperview()
+        }
+        
+        recentBooksLabel.snp.makeConstraints {
+            $0.top.equalTo(searchBar.snp.bottom).offset(20)
+            $0.leading.equalToSuperview().inset(16)
+        }
+        
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(recentBooksLabel.snp.bottom)
+            $0.leading.trailing.equalToSuperview().inset(10)
+            $0.height.equalTo(260)
         }
         
     }
@@ -67,7 +121,43 @@ extension SearchTabViewController: UISearchBarDelegate {
         navigationController?.pushViewController(searchResultVC, animated: true)
     }
 }
-#Preview {
-    SearchTabViewController()
-    // 화면 업데이트: command+option+p
+// MARK: - UICollectionView
+extension SearchTabViewController: UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return recentBooks.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BookCollectionViewCell.identifier, for: indexPath) as? BookCollectionViewCell else {
+            return UICollectionViewCell()
+        }
+        let book = recentBooks[indexPath.item]
+        cell.setData(with: book)
+        return cell
+    }
+}
+
+extension SearchTabViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let paddingSpace = 5 * 4
+        let availableWidth = collectionView.bounds.width - CGFloat(paddingSpace)
+        let widthPerItem = availableWidth / 3.5
+        return CGSize(width: widthPerItem, height: 260)
+    }
+}
+
+extension SearchTabViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let selectedBook = recentBooks[indexPath.item]
+        showBookDetailModal(book: selectedBook)
+    }
+    
+    private func showBookDetailModal(book: Document) {
+        let bookDetailVC = BookDetailViewController()
+        bookDetailVC.book = book
+        
+        self.modalPresentationStyle = .fullScreen
+        self.present(bookDetailVC, animated: true, completion: nil)
+    }
 }
